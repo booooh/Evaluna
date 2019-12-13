@@ -11,7 +11,7 @@ git_branch=$2
 git_tag=$3
 
 current_tag=$(git describe --abbrev=0 --tags)
-if [ !"$git_tag" =~ ^release/.* ] ; then
+if [[ ! "$git_tag" =~ ^release/.* ]] ; then
     echo "ERROR: tag $git_tag does not match pattern release/<foo>"
     exit 1
 fi
@@ -21,7 +21,7 @@ docker_tag=${git_tag##release/}
 git checkout -b $git_tag
 
 # build and push the docker images
-dss/scripts/deploy.sh $git_commit $docker_tag
+bash dss/scripts/deploy.sh $git_commit $docker_tag
 
 # update the helm chart
 # TODO: determine bump_part based on difference between current app version and new app version
@@ -31,4 +31,4 @@ git commit -am "Preparing release branch for ${docker_tag}"
 
 # configure the remote repository, and push the commit
 remote=https://$GITHUB_TOKEN@github.com/$TRAVIS_REPO_SLUG
-git push -u $remote $git_tag
+git push -u $remote refs/heads/$git_tag:refs/heads/$git_tag

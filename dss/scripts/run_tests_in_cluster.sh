@@ -1,5 +1,8 @@
 #! /bin/bash -e
 # create a namespace for the test
+
+exit 0
+
 tag=$1
 test_ns=wqdss-test-${tag}
 kubectl create ns ${test_ns}
