@@ -49,5 +49,10 @@ script:
   - dss/scripts/run_tests_in_cluster.sh $TRAVIS_COMMIT
 
 deploy:
-  provider: script
-  script: bash dss/scripts/deploy.sh $TRAVIS_COMMIT
+  - provider: script
+    script: bash dss/scripts/deploy.sh $TRAVIS_COMMIT
+  - provider: script
+    script: bash dss/scripts/release.sh $TRAVIS_COMMIT $TRAVIS_BRANCH $TRAVIS_TAG
+    on:
+      all_branches: true #TODO: remove this before commiting to master!!
+      condition: $TRAVIS_TAG =~ ^release/.*

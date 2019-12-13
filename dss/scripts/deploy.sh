@@ -1,7 +1,8 @@
 #! /bin/bash -ex
 
 # this gets executed on the master branch, we want to update the docker images that were previously tagged by the latest tag.
-# This isn't the best approach, as it can unexpectedly break things for users...  but will use it for now
+# This isn't the best approach, as it can unexpectedly break things for users...  but will use it for now. If someone needs to
+# lock to a very specific version, should use the commit hash
 COMMIT=$1
 if [ -n "$2" ] ; then
     TAG=$2
